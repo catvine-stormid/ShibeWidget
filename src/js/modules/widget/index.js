@@ -51,16 +51,14 @@ async function insertShibeToPage() {
 
 // /* Button to retrigger/replace the image */
 
-const newShibeButton = document.querySelector('.newShibeButton');
-
-console.log(newShibeButton);
-
-// newShibeButton.addEventListener('click', () => {
-//     insertShibeToPage();
-// });
-
 // /* Transitions between images */
 
 // /* Select animal type */
 
 insertShibeToPage();
+
+const newShibeButton = document.querySelector('.newShibeButton');
+
+newShibeButton.addEventListener('click', () => {
+    insertShibeToPage();
+});
