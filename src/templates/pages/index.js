@@ -9,15 +9,15 @@ export const title = 'Home';
 // }];
 
 const HomePage = () => <DefaultLayout>
-    <div class="container js-widget">
-        <img src="" class="animalImage" />
-        <div class="buttons">
-            <button class="button newShibeButton">New Shibe!</button>
-            <button class="button newCatButton">New Cat!</button>
-            <button class="button newBirdButton">New Bird!</button>
-        </div>
-    </div>
+    <div class="container js-widget" />
     
 </DefaultLayout>;
 
 export default HomePage;
+
+/*         <img src="" class="animalImage" />
+<div class="buttons">
+<button class="button newShibeButton">New Shibe!</button>
+<button class="button newCatButton">New Cat!</button>
+<button class="button newBirdButton">New Bird!</button>
+</div> */

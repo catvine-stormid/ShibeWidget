@@ -1,48 +1,66 @@
 /* Find element to render image to and store in a variable */
 
-const image = document.querySelector('.animalImage');
+// const image = document.querySelector('.animalImage');
 const container = document.querySelector('.container');
-const newShibeButton = document.querySelector('.newShibeButton');
 
-/* Hit API */
+// /* Hit API */
 
 const shibeImage = 'https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true';
 
 async function retrieveShibe() {
+    const response = await fetch(shibeImage);
+    console.log(response);
+    const shibe = await response.json();
+    return shibe;
+}
+
+function importImage(image) {
+    container.innerHTML = `<img src='${image}' />`;
+}
+
+// const shibeButton = `<button class="button newShibeButton">New Shibe!</button>`;
+
+function createButton() {
+    const newButton = document.createElement('button');
+    newButton.innerHTML = 'New Shibe!';
+    newButton.classList.add('button');
+    newButton.classList.add('newShibeButton');
+    container.appendChild(newButton);
+};
+
+// /* Try/Catch block with an error state */
+
+// /* Read response from API and attach image to DOM */
+
+async function insertShibeToPage() {
     try {
-        const response = await fetch(shibeImage);
-        console.log(response);
-        const shibe = await response.json();
-        return shibe;
-    } catch {
-        const errorMessage = `<p>Oops! Couldn\'t find a shibe :( </p>`;
+        const shibaImage = await retrieveShibe();
+        importImage(shibaImage);
+        createButton();
+    } catch (err) {
+        const errorMessage = `<p>Oops! Couldn't find a shibe :( </p>`;
         container.innerHTML = errorMessage;
     }
 }
 
-/* Try/Catch block with an error state */
+// /* Features:
 
-/* Read response from API and attach image to DOM */
+// /* Set a timer and go back to hit API */
 
-async function insertShibeToPage() {
-    const shibaImage = await retrieveShibe();
-    image.setAttribute('src', shibaImage);
-}
+// /* Ensure same image is not fetched more than once */
 
-/* Features:
+// /* Button to retrigger/replace the image */
 
-/* Set a timer and go back to hit API */
+const newShibeButton = document.querySelector('.newShibeButton');
 
-/* Ensure same image is not fetched more than once */
+console.log(newShibeButton);
 
-/* Button to retrigger/replace the image */
+// newShibeButton.addEventListener('click', () => {
+//     insertShibeToPage();
+// });
 
-newShibeButton.addEventListener('click', () => {
-    insertShibeToPage();
-});
+// /* Transitions between images */
 
-/* Transitions between images */
-
-/* Select animal type */
+// /* Select animal type */
 
 insertShibeToPage();
