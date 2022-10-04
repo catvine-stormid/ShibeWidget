@@ -26,6 +26,9 @@ function createButton() {
     newButton.classList.add('button');
     newButton.classList.add('newShibeButton');
     container.appendChild(newButton);
+    newButton.addEventListener('click', () => {
+        insertShibeToPage();
+    });
 };
 
 // /* Try/Catch block with an error state */
@@ -35,11 +38,12 @@ function createButton() {
 async function insertShibeToPage() {
     try {
         const shibaImage = await retrieveShibe();
-        importImage(shibaImage);
-        createButton();
+        await importImage(shibaImage);
+        await createButton();
     } catch (err) {
         const errorMessage = `<p>Oops! Couldn't find a shibe :( </p>`;
         container.innerHTML = errorMessage;
+        createButton();
     }
 }
 
@@ -57,8 +61,10 @@ async function insertShibeToPage() {
 
 insertShibeToPage();
 
-const newShibeButton = document.querySelector('.newShibeButton');
+// const newShibeButton = document.querySelector('button');
 
-newShibeButton.addEventListener('click', () => {
-    insertShibeToPage();
-});
+// console.log(newShibeButton);
+
+// newShibeButton.addEventListener('click', () => {
+//     insertShibeToPage();
+// });
