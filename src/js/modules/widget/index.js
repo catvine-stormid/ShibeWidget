@@ -5,45 +5,43 @@ const container = document.querySelector('.container');
 
 // /* Hit API */
 
-const shibeImage = 'https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true';
+const shibaImage = 'https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true';
 
-async function retrieveShibe() {
-    const response = await fetch(shibeImage);
-    console.log(response);
-    const shibe = await response.json();
-    return shibe;
+function createImage() {
+    const image = document.createElement('img');
+    container.appendChild(image);
 }
 
-function importImage(image) {
-    container.innerHTML = `<img src='${image}' />`;
-}
-
-// const shibeButton = `<button class="button newShibeButton">New Shibe!</button>`;
-
-function createButton() {
+function createShibaButton() {
     const newButton = document.createElement('button');
-    newButton.innerHTML = 'New Shibe!';
+    newButton.innerHTML = 'New Shiba!';
     newButton.classList.add('button');
-    newButton.classList.add('newShibeButton');
+    newButton.classList.add('newShibaButton');
     container.appendChild(newButton);
-    newButton.addEventListener('click', () => {
-        insertShibeToPage();
-    });
 };
 
+function init() {
+    createImage();
+    createShibaButton();
+}
+
+async function retrieveShiba() {
+    const response = await fetch(shibaImage);
+    const shiba = await response.json();
+    return shiba;
+}
 // /* Try/Catch block with an error state */
 
 // /* Read response from API and attach image to DOM */
 
-async function insertShibeToPage() {
+async function insertShibaToPage() {
     try {
-        const shibaImage = await retrieveShibe();
-        await importImage(shibaImage);
-        await createButton();
+        const shibaImage = await retrieveShiba();
+        const imageContainer = document.querySelector('img');
+        imageContainer.setAttribute('src', shibaImage);
     } catch (err) {
-        const errorMessage = `<p>Oops! Couldn't find a shibe :( </p>`;
-        container.innerHTML = errorMessage;
-        createButton();
+        const errorMessage = `<p>Oops! Couldn't find a shiba :( </p>`;
+        container.insertAdjacentHTML('afterbegin', errorMessage);
     }
 }
 
@@ -59,12 +57,13 @@ async function insertShibeToPage() {
 
 // /* Select animal type */
 
-insertShibeToPage();
 
-// const newShibeButton = document.querySelector('button');
+init();
 
-// console.log(newShibeButton);
+insertShibaToPage();
 
-// newShibeButton.addEventListener('click', () => {
-//     insertShibeToPage();
-// });
+const shibaButton = document.querySelector('.newShibaButton');
+
+shibaButton.addEventListener('click', () => {
+    insertShibaToPage();
+});
