@@ -3,13 +3,18 @@
 
 /* Find element to render image to and store in a variable */
 
-const image = document.querySelector('.shibeImage');
+const image = document.querySelector('.animalImage');
 const container = document.querySelector('.container');
 const newShibeButton = document.querySelector('.newShibeButton');
+const newCatButton = document.querySelector('.newCatButton');
+const newBirdButton = document.querySelector('.newBirdButton');
 
 /* Hit API */
 
 const shibeImage = 'https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true';
+const catImage = 'https://shibe.online/api/cats?count=1&urls=true&httpsUrls=true';
+const birdImage = 'https://shibe.online/api/birds?count=1&urls=true&httpsUrls=true';
+
 
 async function retrieveShibe() {
     const response = await fetch(shibeImage);
@@ -18,7 +23,21 @@ async function retrieveShibe() {
     return shibe;
 }
 
-/* Try/Catch block with an error state (oops!) */
+async function retrieveCat() {
+    const response = await fetch(catImage);
+    console.log(response);
+    const cat = await response.json();
+    return cat;
+}
+
+async function retrieveBird() {
+    const response = await fetch(birdImage);
+    console.log(response);
+    const bird = await response.json();
+    return bird;
+}
+
+/* Try/Catch block with an error state */
 
 /* Read response from API and attach image to DOM */
 
@@ -27,6 +46,22 @@ function insertShibeToPage() {
         .then(shibe => {
             console.log(shibe);
             image.setAttribute('src', shibe);
+        });
+}
+
+function insertCatToPage() {
+    retrieveCat()
+        .then(cat => {
+            console.log(cat);
+            image.setAttribute('src', cat);
+        });
+}
+
+function insertBirdToPage() {
+    retrieveBird()
+        .then(bird => {
+            console.log(bird);
+            image.setAttribute('src', bird);
         });
 }
 
@@ -60,6 +95,29 @@ newShibeButton.addEventListener('click', () => {
     }
 });
 
+newCatButton.addEventListener('click', () => {
+    try {
+        insertCatToPage();
+    } catch (error) {
+        console.error(`Error -> ${error}`);
+        const errorMessage = 'Oops! Couldn\'t find a cat :(';
+        const text = document.createElement('p');
+        text.innerText = errorMessage;
+        container.appendChild(text);
+    }
+});
+
+newBirdButton.addEventListener('click', () => {
+    try {
+        insertBirdToPage();
+    } catch (error) {
+        console.error(`Error -> ${error}`);
+        const errorMessage = 'Oops! Couldn\'t find a cat :(';
+        const text = document.createElement('p');
+        text.innerText = errorMessage;
+        container.appendChild(text);
+    }
+});
 
 /* Transitions between images */
 
