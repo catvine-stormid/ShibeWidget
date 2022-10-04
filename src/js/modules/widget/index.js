@@ -5,6 +5,7 @@
 
 const image = document.querySelector('.shibeImage');
 const container = document.querySelector('.container');
+const newShibeButton = document.querySelector('.newShibeButton');
 
 /* Hit API */
 
@@ -21,12 +22,16 @@ async function retrieveShibe() {
 
 /* Read response from API and attach image to DOM */
 
-try {
+function insertShibeToPage() {
     retrieveShibe()
         .then(shibe => {
             console.log(shibe);
             image.setAttribute('src', shibe);
         });
+}
+
+try {
+    insertShibeToPage();
 } catch (error) {
     console.error(`Error -> ${error}`);
     const errorMessage = 'Oops! Couldn\'t find a shibe :(';
@@ -42,6 +47,19 @@ try {
 /* Ensure same image is not fetched more than once */
 
 /* Button to retrigger/replace the image */
+
+newShibeButton.addEventListener('click', () => {
+    try {
+        insertShibeToPage();
+    } catch (error) {
+        console.error(`Error -> ${error}`);
+        const errorMessage = 'Oops! Couldn\'t find a shibe :(';
+        const text = document.createElement('p');
+        text.innerText = errorMessage;
+        container.appendChild(text);
+    }
+});
+
 
 /* Transitions between images */
 

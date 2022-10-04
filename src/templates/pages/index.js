@@ -11,6 +11,7 @@ export const title = 'Home';
 const HomePage = () => <DefaultLayout>
     <div class="container js-widget">
         <img src="" class="shibeImage" />
+        <button class="newShibeButton">New Shibe!</button>
     </div>
 </DefaultLayout>;
 

@@ -1,0 +1,15 @@
+.newShibeButton {
+    background-color: pink;
+    color: rgb(97, 21, 41);
+    border-radius: 25px;
+    border: 2px solid rgb(217, 127, 140);
+    padding: 8px 15px;
+    margin-top: 10px;
+    max-width: 125px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
