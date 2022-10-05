@@ -14,10 +14,3 @@ const HomePage = () => <DefaultLayout>
 </DefaultLayout>;
 
 export default HomePage;
-
-/*         <img src="" class="animalImage" />
-<div class="buttons">
-<button class="button newShibeButton">New Shibe!</button>
-<button class="button newCatButton">New Cat!</button>
-<button class="button newBirdButton">New Bird!</button>
-</div> */
