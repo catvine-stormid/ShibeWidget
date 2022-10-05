@@ -1,9 +1,6 @@
 // const newCatButton = document.querySelector('.newCatButton');
 // const newBirdButton = document.querySelector('.newBirdButton');
 
-// const catImage = 'https://shibe.online/api/cats?count=1&urls=true&httpsUrls=true';
-// const birdImage = 'https://shibe.online/api/birds?count=1&urls=true&httpsUrls=true';
-
 // async function retrieveCat() {
 //     const response = await fetch(catImage);
 //     console.log(response);
