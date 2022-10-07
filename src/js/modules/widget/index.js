@@ -25,13 +25,13 @@ function init() {
     catButton.addEventListener('click', () => {
         clearError(errorContainer);
         updateImage(image, errorContainer, catURL, previousURLs);
-        setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
+        setInterval(() => {updateImage(image, errorContainer, catURL, previousURLs);}, 5000);
     });
     
     birdButton.addEventListener('click', () => {
         clearError(errorContainer);
         updateImage(image, errorContainer, birdURL, previousURLs);
-        setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
+        setInterval(() => {updateImage(image, errorContainer, birdURL, previousURLs);}, 5000);
     });
 }
 
