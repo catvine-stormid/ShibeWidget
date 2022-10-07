@@ -5,30 +5,36 @@ import { createImage, createError, createControls, createButton } from './ui';
 import { updateImage, refreshImage } from './resources';
 
 function init() {
-    const image = createImage(container);
-    const errorContainer = createError(container);
-    const controls = createControls(container);
-    const shibaButton = createButton(controls, 'Shiba');
-    const catButton = createButton(controls, 'Cat');
-    const birdButton = createButton(controls, 'Bird');
-    let currentTimer = setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
+    
+    let elements = {
+        image: createImage(container),
+        errorContainer: createError(container),
+        controls: createControls(container),
+        currentTimer: setInterval(() => {updateImage(elements.image, elements.errorContainer, shibaURL, previousURLs);}, 5000)
+    };
 
-    updateImage(image, errorContainer, shibaURL, previousURLs);
+    let buttons = {
+        shibaButton: createButton(elements.controls, 'Shiba'),
+        catButton: createButton(elements.controls, 'Cat'),
+        birdButton: createButton(elements.controls, 'Bird'),
+    };
 
-    controls.onclick = function(event) {
+    updateImage(elements.image, elements.errorContainer, shibaURL, previousURLs);
+
+    elements.controls.onclick = function(event) {
         let target = event.target;
 
         if (target.tagName !== 'BUTTON') return;
 
         if (target.classList.contains('newShibaButton')) {
-            refreshImage(image, shibaURL, errorContainer, previousURLs, currentTimer);
-            currentTimer = setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
+            refreshImage(elements.image, shibaURL, elements.errorContainer, previousURLs, elements.currentTimer);
+            elements.currentTimer = setInterval(() => {updateImage(elements.image, elements.errorContainer, shibaURL, previousURLs);}, 5000);
         } else if (target.classList.contains('newCatButton')) {
-            refreshImage(image, catURL, errorContainer, previousURLs, currentTimer);
-            currentTimer = setInterval(() => {updateImage(image, errorContainer, catURL, previousURLs);}, 5000);
+            refreshImage(elements.image, catURL, elements.errorContainer, previousURLs, elements.currentTimer);
+            elements.currentTimer = setInterval(() => {updateImage(elements.image, elements.errorContainer, catURL, previousURLs);}, 5000);
         } else if (target.classList.contains('newBirdButton')) {
-            refreshImage(image, birdURL, errorContainer, previousURLs, currentTimer);
-            currentTimer = setInterval(() => {updateImage(image, errorContainer, birdURL, previousURLs);}, 5000);
+            refreshImage(elements.image, birdURL, elements.errorContainer, previousURLs, elements.currentTimer);
+            elements.currentTimer = setInterval(() => {updateImage(elements.image, elements.errorContainer, birdURL, previousURLs);}, 5000);
         }
         
     };
