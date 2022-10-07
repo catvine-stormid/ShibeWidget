@@ -1,5 +1,6 @@
 export function createImage(container) {
     const image = document.createElement('img');
+    image.classList.add('image');
     container.appendChild(image);
     return image;
 }

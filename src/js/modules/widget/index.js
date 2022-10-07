@@ -2,7 +2,7 @@
 
 import { container, shibaURL, catURL, birdURL, previousURLs } from './config';
 import { createImage, createError, createControls, createButton } from './ui';
-import { updateImage, clearError, addClass } from './resources';
+import { updateImage, refreshImage } from './resources';
 
 function init() {
     const image = createImage(container);
@@ -15,26 +15,19 @@ function init() {
 
     updateImage(image, errorContainer, shibaURL, previousURLs);
 
-    shibaButton.addEventListener('click', () => {
-        clearError(errorContainer);
-        updateImage(image, errorContainer, shibaURL, previousURLs);
-        clearInterval(currentTimer);
-        currentTimer = setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
-    });
-    
-    catButton.addEventListener('click', () => {
-        clearError(errorContainer);
-        updateImage(image, errorContainer, catURL, previousURLs);
-        clearInterval(currentTimer);
-        currentTimer = setInterval(() => {updateImage(image, errorContainer, catURL, previousURLs);}, 5000);
-    });
-    
-    birdButton.addEventListener('click', () => {
-        clearError(errorContainer);
-        updateImage(image, errorContainer, birdURL, previousURLs);
-        clearInterval(currentTimer);
-        currentTimer = setInterval(() => {updateImage(image, errorContainer, birdURL, previousURLs);}, 5000);
-    });
+    controls.onclick = function(event) {
+        let target = event.target;
+
+        if (target.tagName !== 'BUTTON') return;
+
+        if (target.classList.contains('newShibaButton')) {
+            refreshImage(image, shibaURL, errorContainer, previousURLs, currentTimer);
+        } else if (target.classList.contains('newCatButton')) {
+            refreshImage(image, catURL, errorContainer, previousURLs, currentTimer);
+        } else if (target.classList.contains('newBirdButton')) {
+            refreshImage(image, birdURL, errorContainer, previousURLs, currentTimer);
+        }
+    };
 }
 
 init();

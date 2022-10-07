@@ -41,15 +41,11 @@ export async function updateImage(container, error, type, cache) {
     }
 }
 
-export function addClass(container, type, type1, type2, type3) {
-    container.removeAttribute('class');
-    if (type === type1) {
-        container.classList.add('shiba');
-    } else if (type === type2) {
-        container.classList.add('cat');
-    } else if (type === type3) {
-        container.classList.add('bird');
-    }
+export function refreshImage(container, type, error, cache, timer) {
+    clearError(error);
+    updateImage(container, error, type, cache);
+    clearInterval(timer);
+    timer = setInterval(() => {updateImage(container, error, type, cache);}, 5000);
 }
 
 // recursion/recursive calls
