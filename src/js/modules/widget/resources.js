@@ -18,12 +18,29 @@ export function clearError(container) {
     }
 }
 
-export async function updateImage(container, error, type) {
+export function cacheImage(url, cache) {
+    if (!cache.includes(url)) {
+        cache.push(url);
+    }
+    return cache;
+}
+
+export async function updateImage(container, error, type, cache) {
     try {
-        const updatedImage = await retrieveImage(type);
+        let updatedImage = await retrieveImage(type);
+        while (cache.includes(updatedImage[0])) {
+            // eslint-disable-next-line no-alert
+            alert('Duplicate image! Trying again for a new image');
+            updatedImage = await retrieveImage(type);
+        }
+        cacheImage(updatedImage[0], cache);
         container.setAttribute('src', updatedImage);
     } catch (err) {
         container.setAttribute('src', '');
         displayError(error);
     }
+
 }
+
+// recursion/recursive calls
+// unit tests
