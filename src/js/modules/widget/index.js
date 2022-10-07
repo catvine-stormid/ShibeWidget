@@ -2,7 +2,7 @@
 
 import { container, shibaURL, catURL, birdURL, previousURLs } from './config';
 import { createImage, createError, createControls, createButton } from './ui';
-import { updateImage, clearError } from './resources';
+import { updateImage, clearError, addClass } from './resources';
 
 function init() {
     const image = createImage(container);
@@ -11,27 +11,29 @@ function init() {
     const shibaButton = createButton(controls, 'Shiba');
     const catButton = createButton(controls, 'Cat');
     const birdButton = createButton(controls, 'Bird');
-    // console.log(previousURLs);
+    let currentTimer = setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
 
     updateImage(image, errorContainer, shibaURL, previousURLs);
-    setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
-  
+
     shibaButton.addEventListener('click', () => {
         clearError(errorContainer);
         updateImage(image, errorContainer, shibaURL, previousURLs);
-        setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
+        clearInterval(currentTimer);
+        currentTimer = setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
     });
     
     catButton.addEventListener('click', () => {
         clearError(errorContainer);
         updateImage(image, errorContainer, catURL, previousURLs);
-        setInterval(() => {updateImage(image, errorContainer, catURL, previousURLs);}, 5000);
+        clearInterval(currentTimer);
+        currentTimer = setInterval(() => {updateImage(image, errorContainer, catURL, previousURLs);}, 5000);
     });
     
     birdButton.addEventListener('click', () => {
         clearError(errorContainer);
         updateImage(image, errorContainer, birdURL, previousURLs);
-        setInterval(() => {updateImage(image, errorContainer, birdURL, previousURLs);}, 5000);
+        clearInterval(currentTimer);
+        currentTimer = setInterval(() => {updateImage(image, errorContainer, birdURL, previousURLs);}, 5000);
     });
 }
 
@@ -48,8 +50,6 @@ Try/Catch block with an error state
 Read response from API and attach image to DOM 
 
 Features:
-
-Set a timer and go back to hit API 
 
 Event Delegation
 

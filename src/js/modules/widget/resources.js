@@ -39,7 +39,17 @@ export async function updateImage(container, error, type, cache) {
         container.setAttribute('src', '');
         displayError(error);
     }
+}
 
+export function addClass(container, type, type1, type2, type3) {
+    container.removeAttribute('class');
+    if (type === type1) {
+        container.classList.add('shiba');
+    } else if (type === type2) {
+        container.classList.add('cat');
+    } else if (type === type3) {
+        container.classList.add('bird');
+    }
 }
 
 // recursion/recursive calls
