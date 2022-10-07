@@ -45,7 +45,6 @@ export function refreshImage(container, type, error, cache, timer) {
     clearError(error);
     updateImage(container, error, type, cache);
     clearInterval(timer);
-    timer = setInterval(() => {updateImage(container, error, type, cache);}, 5000);
 }
 
 // recursion/recursive calls

@@ -22,15 +22,20 @@ function init() {
 
         if (target.classList.contains('newShibaButton')) {
             refreshImage(image, shibaURL, errorContainer, previousURLs, currentTimer);
+            currentTimer = setInterval(() => {updateImage(image, errorContainer, shibaURL, previousURLs);}, 5000);
         } else if (target.classList.contains('newCatButton')) {
             refreshImage(image, catURL, errorContainer, previousURLs, currentTimer);
+            currentTimer = setInterval(() => {updateImage(image, errorContainer, catURL, previousURLs);}, 5000);
         } else if (target.classList.contains('newBirdButton')) {
             refreshImage(image, birdURL, errorContainer, previousURLs, currentTimer);
+            currentTimer = setInterval(() => {updateImage(image, errorContainer, birdURL, previousURLs);}, 5000);
         }
+        
     };
 }
 
 init();
+
 
 // Steps: 
 
