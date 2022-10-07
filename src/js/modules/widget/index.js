@@ -26,13 +26,13 @@ function init() {
 
         if (target.tagName !== 'BUTTON') return;
 
-        if (target.classList.contains('newShibaButton')) {
+        if (target === buttons.shibaButton) {
             refreshImage(elements.image, shibaURL, elements.errorContainer, previousURLs, elements.currentTimer);
             elements.currentTimer = setInterval(() => {updateImage(elements.image, elements.errorContainer, shibaURL, previousURLs);}, 5000);
-        } else if (target.classList.contains('newCatButton')) {
+        } else if (target === buttons.catButton) {
             refreshImage(elements.image, catURL, elements.errorContainer, previousURLs, elements.currentTimer);
             elements.currentTimer = setInterval(() => {updateImage(elements.image, elements.errorContainer, catURL, previousURLs);}, 5000);
-        } else if (target.classList.contains('newBirdButton')) {
+        } else if (target === buttons.birdButton) {
             refreshImage(elements.image, birdURL, elements.errorContainer, previousURLs, elements.currentTimer);
             elements.currentTimer = setInterval(() => {updateImage(elements.image, elements.errorContainer, birdURL, previousURLs);}, 5000);
         }
