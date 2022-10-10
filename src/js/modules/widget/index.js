@@ -4,16 +4,27 @@ import { container, shibaURL, catURL, birdURL, previousURLs } from './config';
 import { createImage, createError, createControls, createButton } from './ui';
 import { updateImage, refreshImage } from './resources';
 
+//create a state object, nest the components
+
 function init() {
     
-    let elements = {
+    // const state = Object.assign({}, (
+    //     settings: Object.assign({}, defaultConfig, userConfig ),
+    //     ui: {
+    //         buttons,
+    //         elements
+    //     }
+    // )
+    // } );
+
+    const elements = {
         image: createImage(container),
         errorContainer: createError(container),
         controls: createControls(container),
-        currentTimer: setInterval(() => {updateImage(elements.image, elements.errorContainer, shibaURL, previousURLs);}, 5000)
+        currentTimer: setInterval(() => {updateImage(elements.image, elements.errorContainer, shibaURL, previousURLs);}, 5000),
     };
 
-    let buttons = {
+    const buttons = {
         shibaButton: createButton(elements.controls, 'Shiba'),
         catButton: createButton(elements.controls, 'Cat'),
         birdButton: createButton(elements.controls, 'Bird'),
