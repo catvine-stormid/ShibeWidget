@@ -1,3 +1,3 @@
-// Array cache to store any image URLs already used on current page state
+// Array cache to store image URLs already seen on current page state
 
 export const previousURLs = [];

@@ -65,27 +65,22 @@ export default (selector, options) => {
     updateImage(state);
 
     // Adds a listener to the controls container - ignores any clicks that aren't on button elements
-    // Get ID from target button clicked
-    // Loop through buttons 
-
 
     controls.onclick = function(event) {
         let target = event.target;
 
         if (target.tagName !== 'BUTTON') return;
 
+        // Get ID from target button clicked to get animal type
+
         const type = target.id;
 
-        // const buttons = document.querySelectorAll('button');
+        // Redefine animalURL - fills in URL with chosen animal from button ID
+        // Grab a new image based on the updated URL and reset current timer
 
-        // for (let i = 0; i < buttons.length; i++) {
         state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
         refreshImage(state);
         state.currentTimer = setInterval(() => {updateImage(state);}, settings.interval);
-        // }
-
-        // listen on all buttons
-        // for each button clicked's ID, restate animalURL,
         
     };
 
@@ -98,27 +93,24 @@ export default (selector, options) => {
     // }));
 };
 
-// understand the code first
-// refactor buttons/cut down repetition
-
 // --------------------------------------------------
 
 // Steps: 
 
-/* Find element to render image to and store in a variable 
+// Find element to render image to and store in a variable 
 
-Hit API 
+// Hit API 
 
-Try/Catch block with an error state 
+// Try/Catch block with an error state 
 
-Read response from API and attach image to DOM 
+// Read response from API and attach image to DOM 
 
-Features:
+// ---------------------------------------------------
 
-Event Delegation
+// Features:
 
-Transitions between images 
+// Event Delegation
 
-Refactor UI Functions to JSX
+// Transitions between images 
 
-*/
+// Refactor UI Functions to JSX
