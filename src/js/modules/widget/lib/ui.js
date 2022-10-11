@@ -24,7 +24,7 @@ export function createButton(container, type) {
     const newButton = document.createElement('button');
     newButton.textContent = `New ${type}!`;
     newButton.classList.add('button');
-    newButton.classList.add(`new${type}Button`);
+    newButton.setAttribute(`id`, `${type}`);
     container.appendChild(newButton);
     return newButton;
 }
