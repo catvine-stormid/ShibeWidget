@@ -66,7 +66,8 @@ export default (selector, options) => {
 
     // Adds a listener to the controls container - ignores any clicks that aren't on button elements
 
-    controls.onclick = function(event) {
+    state.controls.addEventListener('click', event => {
+
         let target = event.target;
 
         if (target.tagName !== 'BUTTON') return;
@@ -82,15 +83,20 @@ export default (selector, options) => {
         refreshImage(state);
         state.currentTimer = setInterval(() => {updateImage(state);}, settings.interval);
         
-    };
+    });
 
     // ----------------------------------------------------------
 
-    //return to this later!! 
+    // let nodes = [container];
 
-    // return nodes.map(node => ({
-    //     settings: { ...defaults, ...node.dataset, ...options }
-    // }));
+    // return nodes.map(node => (
+    //     {
+    //         settings: { ...defaults, ...node.dataset, ...options },
+    //         node
+    //     }
+    // ));
+
+    return { container, settings };
 };
 
 // --------------------------------------------------
@@ -108,8 +114,6 @@ export default (selector, options) => {
 // ---------------------------------------------------
 
 // Features:
-
-// Event Delegation
 
 // Transitions between images 
 
