@@ -22,20 +22,20 @@ describe('ui creation', () => {
     });
 
     it('creates an image container', () => {
-        expect(createImage(container).innerHTML).toMatch(/image/);
+        expect(createImage(container).outerHTML).toMatch(/image/);
     });
 
     it('creates controls block', () => {
-        expect(createControls(container).innerHTML).toMatch(/controls/);
+        expect(createControls(container).outerHTML).toMatch(/controls/);
     });
 
     it('creates a button', () => {
-        expect(createButton(container, 'dog').innerHTML).toMatch(/button/);
-        expect(createButton(container, 'dog').innerHTML).toMatch(/dog/);
+        expect(createButton(container, 'dog').outerHTML).toMatch(/button/);
+        expect(createButton(container, 'dog').outerHTML).toMatch(/dog/);
     });
 
     it('creates an error block', () => {
-        expect(createError(container).innerHTML).toMatch(/errorContainer/);
+        expect(createError(container).outerHTML).toMatch(/errorContainer/);
     });
 });
 //test for retrieveimage
@@ -102,6 +102,7 @@ describe('widget init', () => {
         const deerInstance = widget('.container', { type: 'deer', interval: 1500 });
         expect(deerInstance.state.settings.type).toBe('deer');
         expect(deerInstance.state.settings.interval).toBe(1500);
+        expect(deerInstance.state.animalURL).toBe('https://shibe.online/api/deers?count=1&urls=true&httpsUrls=true');
     });
 });
 

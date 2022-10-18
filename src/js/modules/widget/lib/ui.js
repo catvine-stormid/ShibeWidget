@@ -2,7 +2,7 @@ export function createImage(container) {
     const image = document.createElement('img');
     image.classList.add('image');
     container.appendChild(image);
-    return container;
+    return image;
 }
 
 export function createError(container) {
@@ -10,14 +10,14 @@ export function createError(container) {
     errorContainer.classList.add('errorContainer');
     errorContainer.setAttribute('role', 'alert');
     container.appendChild(errorContainer);
-    return container;
+    return errorContainer;
 }
 
 export function createControls(container) {
     const controls = document.createElement('div');
     controls.classList.add('controls');
     container.appendChild(controls);
-    return container;
+    return controls;
 }
 
 export function createButton(container, type) {
@@ -26,5 +26,5 @@ export function createButton(container, type) {
     newButton.classList.add('button');
     newButton.setAttribute(`id`, `${type}`);
     container.appendChild(newButton);
-    return container;
+    return newButton;
 }
