@@ -4,5 +4,5 @@ import widget from './lib/index';
 // Runs if specified class is found on a container
 // Takes in optional settings as a parameter
 if (document.querySelector('.js-widget')) {
-    console.log(widget('.js-widget', { type: 'shibe', interval: 5000 }));
+    const instance = widget('.js-widget', { type: 'shibe', interval: 5000 });
 }

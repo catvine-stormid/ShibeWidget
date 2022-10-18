@@ -10,7 +10,7 @@
     "start": "npm run dev",
     "storybook": "start-storybook -p 6006",
     "storybook:eject": "build-storybook -c .storybook -o storybook",
-    "test": "node_modules/.bin/jest",
+    "test": "node_modules/.bin/jest --coverage",
     "watch": "npm run watch-dev",
     "watch-dev": "webpack --config tools/webpack/config/integration --watch",
     "build-storybook": "build-storybook"
@@ -22,7 +22,11 @@
       "^@templates(.*)$": "<rootDir>/src/templates$1",
       "^@layouts(.*)$": "<rootDir>/src/templates/layouts$1",
       "^@components(.*)$": "<rootDir>/src/templates/components$1"
-    }
+    },
+    "automock": false,
+    "setupFiles": [
+      "./src/js/modules/widget/__tests__/setupJest.js"
+    ]
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -64,6 +68,7 @@
     "imagemin-webpack-plugin": "^2.4.2",
     "jest": "^26.6.3",
     "jest-axe": "^4.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "mini-css-extract-plugin": "^0.8.0",
     "postcss": "^8.2.10",
     "postcss-css-variables": "^0.18.0",

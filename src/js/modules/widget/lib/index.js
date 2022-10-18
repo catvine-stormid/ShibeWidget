@@ -4,7 +4,7 @@
     - Image hydration functions 
     - Default settings */
 
-import { previousURLs } from './config';
+import { cache } from './config';
 import { createImage, createError, createControls, createButton } from './ui';
 import { updateImage, refreshImage } from './resources';
 import defaults from './defaults';
@@ -56,7 +56,7 @@ export default (selector, options) => {
         catButton,
         birdButton,
         animalURL,
-        previousURLs,
+        cache,
         settings
     };
 
@@ -96,7 +96,7 @@ export default (selector, options) => {
     //     }
     // ));
 
-    return { container, settings };
+    return { state };
 };
 
 // --------------------------------------------------

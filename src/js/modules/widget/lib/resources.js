@@ -1,3 +1,5 @@
+import { errorMessage, errorClass } from './constants';
+
 export async function retrieveImage(imageType) {
     const response = await fetch(imageType);
     const retrievedImage = await response.json();
@@ -5,17 +7,17 @@ export async function retrieveImage(imageType) {
 }
 
 export function displayError(container) {
-    const errorMessage = `Oops! Couldn't find an image :(`;
-    container.innerText = errorMessage;
-    container.classList.add('errorFound');
-    return errorMessage;
+    container.textContent = errorMessage;
+    container.classList.add(errorClass);
+    return container;
 }
 
 export function clearError(container) {
-    if (container.classList.contains('errorFound')) {
+    if (container.classList.contains(errorClass)) {
         container.textContent = '';
-        container.classList.remove('errorFound');
+        container.classList.remove(errorClass);
     }
+    return container;
 }
 
 export function cacheImage(url, cache) {
@@ -26,15 +28,15 @@ export function cacheImage(url, cache) {
 }
 
 
-export async function updateImage({ image, errorContainer, animalURL, previousURLs }) {
+export async function updateImage({ image, errorContainer, animalURL, cache }) {
     try {
         let updatedImage = await retrieveImage(animalURL);
-        while (previousURLs.includes(updatedImage[0])) {
+        while (cache.includes(updatedImage[0])) {
             // eslint-disable-next-line no-alert
             alert('Duplicate image! Trying again for a new image');
             updatedImage = await retrieveImage(animalURL);
         }
-        cacheImage(updatedImage[0], previousURLs);
+        cacheImage(updatedImage[0], cache);
         image.setAttribute('src', updatedImage);
     } catch (err) {
         image.setAttribute('src', '');
@@ -42,9 +44,9 @@ export async function updateImage({ image, errorContainer, animalURL, previousUR
     }
 }
 
-export function refreshImage({ image, animalURL, errorContainer, previousURLs, currentTimer }) {
+export function refreshImage({ image, animalURL, errorContainer, cache, currentTimer }) {
     clearError(errorContainer);
-    updateImage({ image, errorContainer, animalURL, previousURLs });
+    updateImage({ image, errorContainer, animalURL, cache });
     clearInterval(currentTimer);
 }
 
