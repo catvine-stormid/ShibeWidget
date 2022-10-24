@@ -6,7 +6,7 @@
 
 import { cache } from './config';
 import { createImage, createError, createControls, createButton } from './ui';
-import { updateImage, refreshImage } from './resources';
+import { updateImage, clearError, changeURLOnClick } from './resources';
 import defaults from './defaults';
 
 // Export default/initialization function to be called elsewhere
@@ -40,9 +40,10 @@ export default (selector, options) => {
     const birdButton = createButton(controls, 'bird');
 
     // Defines the interval timer to refresh images. This uses whichever timeframe was passed into the initialization function.
-    // Default time is 5000  miliseconds.
+    // Default time is 5000 miliseconds.
 
-    let currentTimer = setInterval(() => {updateImage(state);}, settings.interval);
+    let currentInterval = settings.interval;
+    let currentTimer;
 
     // Contains all variables created so far into one Single State Object for easier access later.
     
@@ -57,15 +58,23 @@ export default (selector, options) => {
         birdButton,
         animalURL,
         cache,
-        settings
+        settings,
+        currentInterval
     };
 
     // Runs the initial image update based on the animal that was passed in
 
+    state.currentTimer = setInterval(() => {updateImage(state);}, currentInterval);
     updateImage(state);
 
     // Adds a listener to the controls container - ignores any clicks that aren't on button elements
 
+    // state.controls.addEventListener('click', event => {
+    //     changeURLOnClick(event, state);
+    //     clearInterval(state.currentTimer);
+    //     state.currentTimer = setInterval(() => {updateImage(state);}, currentInterval);
+    // });
+    
     state.controls.addEventListener('click', event => {
 
         let target = event.target;
@@ -80,21 +89,12 @@ export default (selector, options) => {
         // Grab a new image based on the updated URL and reset current timer
 
         state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
-        refreshImage(state);
-        state.currentTimer = setInterval(() => {updateImage(state);}, settings.interval);
+        clearError(state.errorContainer);
+        updateImage(state);
+        clearInterval(state.currentTimer);
+        state.currentTimer = setInterval(() => { updateImage(state); }, currentInterval);
         
     });
-
-    // ----------------------------------------------------------
-
-    // let nodes = [container];
-
-    // return nodes.map(node => (
-    //     {
-    //         settings: { ...defaults, ...node.dataset, ...options },
-    //         node
-    //     }
-    // ));
 
     return { state };
 };

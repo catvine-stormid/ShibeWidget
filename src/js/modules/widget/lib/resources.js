@@ -31,33 +31,48 @@ export function cacheImage(url, cache) {
 export async function updateImage({ image, errorContainer, animalURL, cache }) {
     try {
         let updatedImage = await retrieveImage(animalURL);
-        while (cache.includes(updatedImage[0])) {
+        updatedImage = updatedImage[0];
+        while (cache.includes(updatedImage)) {
             // eslint-disable-next-line no-alert
             alert('Duplicate image! Trying again for a new image');
             updatedImage = await retrieveImage(animalURL);
         }
-        cacheImage(updatedImage[0], cache);
+        cacheImage(updatedImage, cache);
         image.setAttribute('src', updatedImage);
     } catch (err) {
         image.setAttribute('src', '');
         displayError(errorContainer);
+        return errorContainer;
     }
+    return image;
 }
 
-export function refreshImage({ image, animalURL, errorContainer, cache, currentTimer }) {
-    clearError(errorContainer);
-    updateImage({ image, errorContainer, animalURL, cache });
-    clearInterval(currentTimer);
-}
+//move handler into seperate function 
 
-// export const getSelection = selector => {
+export async function changeURLOnClick(event, { animalURL, errorContainer, currentTimer, image, cache, currentInterval }) {
+    if (event.target.matches('button')) {
+        // Get ID from target button clicked to get animal type
 
-//     if (typeof selector === 'string') return [].slice.call(document.querySelectorAll(selector));
-//     if (selector instanceof Array) return selector;
-//     if (Object.prototype.isPrototypeOf.call(NodeList.prototype, selector)) return [].slice.call(selector);
-//     if (selector instanceof HTMLElement) return [selector];
-//     return [];
-// };
+        const type = event.target.id;
+
+        // Redefine animalURL - fills in URL with chosen animal from button ID
+        // Grab a new image based on the updated URL and reset current timer
+
+        animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
+        clearError(errorContainer);
+        await updateImage({ image, errorContainer, animalURL, cache });
+        return animalURL;
+        // clearInterval(currentTimer);
+        // currentTimer = setInterval(() => {updateImage({ image, errorContainer, animalURL, cache });}, currentInterval);
+    }
+};
+
+// export function refreshImage({ image, animalURL, errorContainer, cache, currentTimer }) {
+//     clearError(errorContainer);
+//     updateImage({ image, errorContainer, animalURL, cache });
+//     clearInterval(currentTimer);
+// }
+
 
 // recursion/recursive calls
 // unit tests
