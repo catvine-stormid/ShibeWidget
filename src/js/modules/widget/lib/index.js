@@ -4,117 +4,119 @@
     - Image hydration functions 
     - Default settings */
 
-import { cache } from './config';
-import { createImage, createError, createControls, createButton } from './ui';
-import { updateImage, clearError, changeURLOnClick } from './resources';
-import defaults from './defaults';
+import { cache } from "./config";
+import { createImage, createError, createControls, createButton } from "./ui";
+import { updateImage, clearError, changeURLOnClick } from "./resources";
+import defaults from "./defaults";
 
 // Export default/initialization function to be called elsewhere
 // Pass the class selector of the container that you want the widget to be built inside of
 // Pass in options you want to be different from the default - animal type or interval time
 
 export default (selector, options) => {
-    
-    // Grab the container element from the document body using the selector class
+  // Grab the container element from the document body using the selector class
 
-    let container = document.querySelector(selector);
+  let container = document.querySelector(selector);
 
-    // Overwrites default settings with any passed in configurations to create the final settings
+  // Overwrites default settings with any passed in configurations to create the final settings
 
-    const settings = {
-        ...defaults, ...options
-    };
+  const settings = {
+    ...defaults,
+    ...options,
+  };
 
-    // Defines the URL the image will be fetched from - this will fill with whatever animal setting was passed in to the URL.
-    // Default animal is Shibes
+  // Defines the URL the image will be fetched from - this will fill with whatever animal setting was passed in to the URL.
+  // Default animal is Shibes
 
-    const animalURL = `https://shibe.online/api/${settings.type}s?count=1&urls=true&httpsUrls=true`;
-    
-    // Define and create each of the document elements
+  const animalURL = `https://shibe.online/api/${settings.type}s?count=1&urls=true&httpsUrls=true`;
 
-    const image = createImage(container);
-    const errorContainer = createError(container);
-    const controls = createControls(container);
-    const shibaButton = createButton(controls, 'shibe');
-    const catButton = createButton(controls, 'cat');
-    const birdButton = createButton(controls, 'bird');
+  // Define and create each of the document elements
 
-    // Defines the interval timer to refresh images. This uses whichever timeframe was passed into the initialization function.
-    // Default time is 5000 miliseconds.
+  const image = createImage(container);
+  const errorContainer = createError(container);
+  const controls = createControls(container);
+  const shibaButton = createButton(controls, "shibe");
+  const catButton = createButton(controls, "cat");
+  const birdButton = createButton(controls, "bird");
 
-    let currentInterval = settings.interval;
-    let currentTimer;
+  // Defines the interval timer to refresh images. This uses whichever timeframe was passed into the initialization function.
+  // Default time is 5000 miliseconds.
 
-    // Contains all variables created so far into one Single State Object for easier access later.
-    
-    const state = {
-        container,
-        image,
-        errorContainer,
-        controls,
-        currentTimer,
-        shibaButton,
-        catButton,
-        birdButton,
-        animalURL,
-        cache,
-        settings,
-        currentInterval
-    };
+  let currentInterval = settings.interval;
+  let currentTimer;
 
-    // Runs the initial image update based on the animal that was passed in
+  // Contains all variables created so far into one Single State Object for easier access later.
 
-    state.currentTimer = setInterval(() => {updateImage(state);}, currentInterval);
+  const state = {
+    container,
+    image,
+    errorContainer,
+    controls,
+    currentTimer,
+    shibaButton,
+    catButton,
+    birdButton,
+    animalURL,
+    cache,
+    settings,
+    currentInterval,
+  };
+
+  // Runs the initial image update based on the animal that was passed in
+
+  state.currentTimer = setInterval(() => {
     updateImage(state);
+  }, currentInterval);
+  updateImage(state);
 
-    // Adds a listener to the controls container - ignores any clicks that aren't on button elements
+  // Adds a listener to the controls container - ignores any clicks that aren't on button elements
 
-    // state.controls.addEventListener('click', event => {
-    //     changeURLOnClick(event, state);
-    //     clearInterval(state.currentTimer);
-    //     state.currentTimer = setInterval(() => {updateImage(state);}, currentInterval);
-    // });
-    
-    state.controls.addEventListener('click', event => {
+  state.controls.addEventListener("click", (event) => {
+    changeURLOnClick(event, state);
+    //   clearInterval(state.currentTimer);
+    //   state.currentTimer = setInterval(() => {updateImage(state);}, currentInterval);
+  });
 
-        let target = event.target;
+  //   state.controls.addEventListener("click", (event) => {
+  //     let target = event.target;
 
-        if (target.tagName !== 'BUTTON') return;
+  //     if (target.tagName !== "BUTTON") return;
 
-        // Get ID from target button clicked to get animal type
+  //     // Get ID from target button clicked to get animal type
 
-        const type = target.id;
+  //     const type = target.id;
 
-        // Redefine animalURL - fills in URL with chosen animal from button ID
-        // Grab a new image based on the updated URL and reset current timer
+  //     // Redefine animalURL - fills in URL with chosen animal from button ID
+  //     // Grab a new image based on the updated URL and reset current timer
 
-        state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
-        clearError(state.errorContainer);
-        updateImage(state);
-        clearInterval(state.currentTimer);
-        state.currentTimer = setInterval(() => { updateImage(state); }, currentInterval);
-        
-    });
+  //     state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
+  //     clearError(state.errorContainer);
+  //     updateImage(state);
+  //     clearInterval(state.currentTimer);
+  //     state.currentTimer = setInterval(() => {
+  //       updateImage(state);
+  //     }, currentInterval);
+  //   });
 
-    return { state };
+  //   return { state };
 };
 
 // --------------------------------------------------
 
-// Steps: 
+// Steps:
 
-// Find element to render image to and store in a variable 
+// Find element to render image to and store in a variable
 
-// Hit API 
+// Hit API
 
-// Try/Catch block with an error state 
+// Try/Catch block with an error state
 
-// Read response from API and attach image to DOM 
+// Read response from API and attach image to DOM
 
 // ---------------------------------------------------
 
 // Features:
 
-// Transitions between images 
+// Transitions between images
 
 // Refactor UI Functions to JSX
