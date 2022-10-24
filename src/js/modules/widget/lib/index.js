@@ -6,8 +6,28 @@
 
 import { cache } from './config';
 import { createImage, createError, createControls, createButton } from './ui';
-import { updateImage, clearError, changeURLOnClick } from './resources';
+import { updateImage, clearError } from './resources';
 import defaults from './defaults';
+
+export const changeURL = state => event => {
+
+    let target = event.target;
+    
+    if (target.tagName !== 'BUTTON') return;
+    
+    // Get ID from target button clicked to get animal type
+    
+    const type = target.id;
+    
+    // Redefine animalURL - fills in URL with chosen animal from button ID
+    // Grab a new image based on the updated URL and reset current timer
+    
+    state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
+    clearError(state.errorContainer);
+    updateImage(state);
+    clearInterval(state.currentTimer);
+    state.currentTimer = setInterval(() => { updateImage(state); }, state.currentInterval);
+};
 
 // Export default/initialization function to be called elsewhere
 // Pass the class selector of the container that you want the widget to be built inside of
@@ -59,7 +79,7 @@ export default (selector, options) => {
         animalURL,
         cache,
         settings,
-        currentInterval
+        currentInterval,
     };
 
     // Runs the initial image update based on the animal that was passed in
@@ -69,32 +89,7 @@ export default (selector, options) => {
 
     // Adds a listener to the controls container - ignores any clicks that aren't on button elements
 
-    // state.controls.addEventListener('click', event => {
-    //     changeURLOnClick(event, state);
-    //     clearInterval(state.currentTimer);
-    //     state.currentTimer = setInterval(() => {updateImage(state);}, currentInterval);
-    // });
-    
-    state.controls.addEventListener('click', event => {
-
-        let target = event.target;
-
-        if (target.tagName !== 'BUTTON') return;
-
-        // Get ID from target button clicked to get animal type
-
-        const type = target.id;
-
-        // Redefine animalURL - fills in URL with chosen animal from button ID
-        // Grab a new image based on the updated URL and reset current timer
-
-        state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
-        clearError(state.errorContainer);
-        updateImage(state);
-        clearInterval(state.currentTimer);
-        state.currentTimer = setInterval(() => { updateImage(state); }, currentInterval);
-        
-    });
+    state.controls.addEventListener('click', handler(state));
 
     return { state };
 };

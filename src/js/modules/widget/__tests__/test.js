@@ -1,5 +1,5 @@
 import { enableFetchMocks } from 'jest-fetch-mock';
-import widget from '../lib';
+import widget, { changeURL } from '../lib';
 import { retrieveImage, displayError, cacheImage, clearError, updateImage } from '../lib/resources';
 import { errorMessage } from '../lib/constants';
 import { createImage, createError, createControls, createButton } from '../lib/ui';
@@ -180,6 +180,10 @@ describe('widget init', () => {
         deerInstance = widget('.container', { type: 'deer', interval: 1500 });
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('takes setting inputs correctly', () => {
         expect(deerInstance.state.settings.type).toBe('deer');
         expect(deerInstance.state.settings.interval).toBe(1500);
@@ -209,6 +213,69 @@ describe('widget init', () => {
         expect(deerInstance.state.errorContainer.className).toMatch('errorContainer');
     });
 
-    
 });
 
+describe('event listeners', () => {
+    document.body.innerHTML =
+            `<div class="container">
+                <img class="image" />
+                <div class="errorContainer" />
+                <div class="controls">
+                    <button class="shibe" id="shibe">Shibe</button>
+                    <button class="cat" id="cat">Cat</button>
+                </div>
+            </div>`;
+    let container = document.querySelector('.container');
+    let image = document.querySelector('.image');
+    let errorContainer = document.querySelector('.errorContainer');
+    let controls = document.querySelector('.controls');
+    let shibeButton = document.querySelector('.shibe');
+    let catButton = document.querySelector('.cat');
+    let animalURL = `https://shibe.online/api/cats?count=1&urls=true&httpsUrls=true`;
+    let cache = [];
+    let currentInterval = 4000;
+    let currentTimer;
+
+    const state = {
+        container,
+        image,
+        errorContainer,
+        controls,
+        currentTimer,
+        shibeButton,
+        catButton,
+        animalURL,
+        cache,
+        currentInterval,
+    };
+    
+    it('changes animalURL', () => {
+        
+        let clickEvent = new Event('click');
+        state.controls.addEventListener('click', changeURL(state));
+        state.shibeButton.dispatchEvent(clickEvent);
+        expect(state.animalURL).toBe(`https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true1`);
+    });
+});
+
+// state.controls.addEventListener('click', handler(state));
+
+// export const handler = state => event => {
+
+//     let target = event.target;
+    
+//     if (target.tagName !== 'BUTTON') return;
+    
+//     // Get ID from target button clicked to get animal type
+    
+//     const type = target.id;
+    
+//     // Redefine animalURL - fills in URL with chosen animal from button ID
+//     // Grab a new image based on the updated URL and reset current timer
+    
+//     state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
+//     clearError(state.errorContainer);
+//     updateImage(state);
+//     clearInterval(state.currentTimer);
+//     state.currentTimer = setInterval(() => { updateImage(state); }, state.currentInterval);
+// };

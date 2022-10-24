@@ -46,33 +46,5 @@ export async function updateImage({ image, errorContainer, animalURL, cache }) {
     }
     return image;
 }
-
-//move handler into seperate function 
-
-export async function changeURLOnClick(event, { animalURL, errorContainer, currentTimer, image, cache, currentInterval }) {
-    if (event.target.matches('button')) {
-        // Get ID from target button clicked to get animal type
-
-        const type = event.target.id;
-
-        // Redefine animalURL - fills in URL with chosen animal from button ID
-        // Grab a new image based on the updated URL and reset current timer
-
-        animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
-        clearError(errorContainer);
-        await updateImage({ image, errorContainer, animalURL, cache });
-        return animalURL;
-        // clearInterval(currentTimer);
-        // currentTimer = setInterval(() => {updateImage({ image, errorContainer, animalURL, cache });}, currentInterval);
-    }
-};
-
-// export function refreshImage({ image, animalURL, errorContainer, cache, currentTimer }) {
-//     clearError(errorContainer);
-//     updateImage({ image, errorContainer, animalURL, cache });
-//     clearInterval(currentTimer);
-// }
-
-
 // recursion/recursive calls
 // unit tests
