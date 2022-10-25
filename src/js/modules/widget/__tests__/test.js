@@ -219,7 +219,7 @@ describe('event listeners', () => {
     document.body.innerHTML =
             `<div class="container">
                 <img class="image" />
-                <div class="errorContainer" />
+                <div class="errorContainer errorFound">Error</div>
                 <div class="controls">
                     <button class="shibe" id="shibe">Shibe</button>
                     <button class="cat" id="cat">Cat</button>
@@ -248,34 +248,23 @@ describe('event listeners', () => {
         cache,
         currentInterval,
     };
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
     
     it('changes animalURL', () => {
         
-        let clickEvent = new Event('click');
         state.controls.addEventListener('click', changeURL(state));
-        state.shibeButton.dispatchEvent(clickEvent);
-        expect(state.animalURL).toBe(`https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true1`);
+        state.shibeButton.click();
+        expect(state.animalURL).toBe(`https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true`);
     });
+
+    it('clears errorContainer', () => {
+        
+        state.shibeButton.addEventListener('click', changeURL(state));
+        state.shibeButton.click();
+        expect(state.errorContainer.textContent).toBeFalsy();
+    });
+
 });
-
-// state.controls.addEventListener('click', handler(state));
-
-// export const handler = state => event => {
-
-//     let target = event.target;
-    
-//     if (target.tagName !== 'BUTTON') return;
-    
-//     // Get ID from target button clicked to get animal type
-    
-//     const type = target.id;
-    
-//     // Redefine animalURL - fills in URL with chosen animal from button ID
-//     // Grab a new image based on the updated URL and reset current timer
-    
-//     state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
-//     clearError(state.errorContainer);
-//     updateImage(state);
-//     clearInterval(state.currentTimer);
-//     state.currentTimer = setInterval(() => { updateImage(state); }, state.currentInterval);
-// };

@@ -9,7 +9,7 @@ import { createImage, createError, createControls, createButton } from './ui';
 import { updateImage, clearError } from './resources';
 import defaults from './defaults';
 
-export const changeURL = state => event => {
+export const changeURL = state => async event => {
 
     let target = event.target;
     
@@ -24,7 +24,7 @@ export const changeURL = state => event => {
     
     state.animalURL = `https://shibe.online/api/${type}s?count=1&urls=true&httpsUrls=true`;
     clearError(state.errorContainer);
-    updateImage(state);
+    await updateImage(state);
     clearInterval(state.currentTimer);
     state.currentTimer = setInterval(() => { updateImage(state); }, state.currentInterval);
 };
@@ -89,7 +89,7 @@ export default (selector, options) => {
 
     // Adds a listener to the controls container - ignores any clicks that aren't on button elements
 
-    state.controls.addEventListener('click', handler(state));
+    state.controls.addEventListener('click', changeURL(state));
 
     return { state };
 };
