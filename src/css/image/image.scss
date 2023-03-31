@@ -1,3 +1,14 @@
 .image {
-    max-height: 600px;
+    height: 500px;
+    width: 500px;
+    object-fit: cover;
+    border-radius: 50px;
+    box-shadow: 10px 20px 30px 5px lightgrey;
+    box-shadow: 10px 3px 20px 2px darkgrey;
+    transition: 0.5s all ease-in-out;
+    // border: 5px dotted pink;
+
+    &:hover {
+        transform: scale(1.1)
+    }
 }
